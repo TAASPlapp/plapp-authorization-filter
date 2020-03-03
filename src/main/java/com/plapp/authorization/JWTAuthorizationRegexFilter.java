@@ -14,12 +14,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import sun.misc.IOUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -46,9 +48,9 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
     }
 
     public void readPublicKey() throws Exception {
-        String path = new ClassPathResource("public.der").getFile().getAbsolutePath();
-        logger.info("Loading public key file: " + path);
-        byte[] keyBytes = Files.readAllBytes(Paths.get(path));
+        InputStream inputStream = new ClassPathResource("public.der").getInputStream();
+        logger.info("Loading public key file");
+        byte[] keyBytes = IOUtils.readAllBytes(inputStream);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         publicKey = keyFactory.generatePublic(keySpec);
