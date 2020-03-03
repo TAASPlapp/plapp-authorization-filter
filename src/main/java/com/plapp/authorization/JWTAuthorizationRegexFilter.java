@@ -50,6 +50,7 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
     public void readPublicKey() throws Exception {
         InputStream inputStream = new ClassPathResource("public.der").getInputStream();
         logger.info("Loading public key file");
+        logger.info("Available bytes: " + inputStream.available());
         byte[] keyBytes = new byte[inputStream.available()];
         inputStream.read(keyBytes);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
