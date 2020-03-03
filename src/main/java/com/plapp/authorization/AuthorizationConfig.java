@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AuthorizationConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors().disable().authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .anyRequest().authenticated()
                 .and().addFilter(new JWTAuthorizationRegexFilter(authenticationManager()));
     }
