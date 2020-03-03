@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -48,11 +49,14 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
     }
 
     public void readPublicKey() throws Exception {
-        InputStream inputStream = new ClassPathResource("public.der").getInputStream();
-        logger.info("Loading public key file");
+        String url = "https://github.com/TAASPlapp/plapp-authorization-filter/blob/master/src/main/resources/public.der?raw=true";
+
+        logger.info("Loading public key file from " + url);
+        InputStream inputStream = new URL(url).openStream();
         logger.info("Available bytes: " + inputStream.available());
         byte[] keyBytes = new byte[inputStream.available()];
         inputStream.read(keyBytes);
+
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         publicKey = keyFactory.generatePublic(keySpec);
