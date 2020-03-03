@@ -17,4 +17,3 @@ public class AuthorizationConfig extends WebSecurityConfigurerAdapter {
                 .and().addFilter(new JWTAuthorizationRegexFilter(authenticationManager()));
     }
 }
-
