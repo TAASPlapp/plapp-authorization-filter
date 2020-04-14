@@ -54,7 +54,7 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
         //InputStream inputStream = new URL(url).openStream();
 
         InputStream inputStream = new ClassPathResource("public.der").getInputStream();
-        logger.info("Loading private key from classpath, available bytes: " + inputStream.available());
+        logger.info("Loading public key from classpath, available bytes: " + inputStream.available());
         byte[] keyBytes = new byte[inputStream.available()];
         inputStream.read(keyBytes);
 
