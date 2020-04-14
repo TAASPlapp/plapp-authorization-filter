@@ -62,5 +62,15 @@ public class ResourceAuthority implements GrantedAuthority, Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "ResourceAuthority{" +
+                "authorityId=" + authorityId +
+                ", authority='" + authority + '\'' +
+                ", values=" + values +
+                ", userId=" + userId +
+                '}';
+    }
 }
 
