@@ -7,14 +7,4 @@ import org.springframework.security.core.AuthenticationException;
 
 @SpringBootTest(classes = ReadKeyTests.class)
 public class ReadKeyTests {
-
-    @Test
-    public void testRead() throws Exception {
-        new JWTAuthorizationRegexFilter(new AuthenticationManager() {
-            @Override
-            public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                return null;
-            }
-        });
-    }
 }
