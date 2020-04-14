@@ -43,17 +43,13 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
     private ObjectMapper objectMapper = new ObjectMapper();
     private PublicKey publicKey;
 
-    public JWTAuthorizationRegexFilter(AuthenticationManager authenticationManager) throws Exception {
+    public JWTAuthorizationRegexFilter(AuthenticationManager authenticationManager, String publicKeyPath) throws Exception {
         super(authenticationManager);
-        readPublicKey();
+        readPublicKey(publicKeyPath);
     }
 
-    public void readPublicKey() throws Exception {
-        //String url = "https://github.com/TAASPlapp/plapp-authorization-filter/blob/master/src/main/resources/public.der?raw=true";
-        //logger.info("Loading public key file from " + url);
-        //InputStream inputStream = new URL(url).openStream();
-
-        InputStream inputStream = new ClassPathResource("public.der").getInputStream();
+    public void readPublicKey(String publicKeyPath) throws Exception {
+        InputStream inputStream = new ClassPathResource(publicKeyPath).getInputStream();
         logger.info("Loading public key from classpath, available bytes: " + inputStream.available());
         byte[] keyBytes = new byte[inputStream.available()];
         inputStream.read(keyBytes);
