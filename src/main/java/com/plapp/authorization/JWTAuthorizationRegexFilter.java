@@ -49,11 +49,12 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
     }
 
     public void readPublicKey() throws Exception {
-        String url = "https://github.com/TAASPlapp/plapp-authorization-filter/blob/master/src/main/resources/public.der?raw=true";
+        //String url = "https://github.com/TAASPlapp/plapp-authorization-filter/blob/master/src/main/resources/public.der?raw=true";
+        //logger.info("Loading public key file from " + url);
+        //InputStream inputStream = new URL(url).openStream();
 
-        logger.info("Loading public key file from " + url);
-        InputStream inputStream = new URL(url).openStream();
-        logger.info("Available bytes: " + inputStream.available());
+        InputStream inputStream = new ClassPathResource("private.der").getInputStream();
+        logger.info("Loading private key from classpath, available bytes: " + inputStream.available());
         byte[] keyBytes = new byte[inputStream.available()];
         inputStream.read(keyBytes);
 
