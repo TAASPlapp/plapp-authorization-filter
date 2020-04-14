@@ -20,6 +20,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -50,9 +51,12 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
 
     public void readPublicKey(String publicKeyPath) throws Exception {
         InputStream inputStream = new ClassPathResource(publicKeyPath).getInputStream();
-        logger.info("Loading public key from classpath, available bytes: " + inputStream.available());
-        byte[] keyBytes = new byte[inputStream.available()];
-        inputStream.read(keyBytes);
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        int availableBytes = dataInputStream.available();
+
+        logger.info("Loading public key from classpath, available bytes: " + availableBytes);
+        byte[] keyBytes = new byte[availableBytes];
+        dataInputStream.readFully(keyBytes);
 
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
