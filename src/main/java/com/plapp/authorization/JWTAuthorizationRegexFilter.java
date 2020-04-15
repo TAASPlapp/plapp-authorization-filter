@@ -133,9 +133,6 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
             }
         }
 
-        if (!requestAuthorized)
-            return null;
-
         return new UsernamePasswordAuthenticationToken(subject, null, authorities);
     }
 }
