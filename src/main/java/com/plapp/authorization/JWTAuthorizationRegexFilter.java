@@ -133,6 +133,9 @@ public class JWTAuthorizationRegexFilter extends BasicAuthenticationFilter {
             }
         }
 
+        if (!requestAuthorized)
+            logger.info("No matching authority found: allowing access");
+
         return new UsernamePasswordAuthenticationToken(subject, null, authorities);
     }
 }
